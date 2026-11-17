@@ -21,4 +21,4 @@ jobs:
         with:
           nvidia-api-key: ${{ secrets.NVIDIA_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          enable-autofix: 'false'
+          enable-autofix: 'true'
