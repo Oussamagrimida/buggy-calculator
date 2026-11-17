@@ -1,0 +1,35 @@
+
+name: AI Code Reviewer Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Verify PR checkout
+        run: |
+          echo "Event PR head: ${{ github.event.pull_request.head.sha }}"
+          echo "Actual checkout HEAD:"
+          git rev-parse HEAD
+          echo "Checked out branch:"
+          git branch --show-current
+
+      - name: Run AI Code Reviewer
+        uses: Oussamagrimida/AI-Code-reviewer-Github-Action@main
+        with:
+          nvidia-api-key: ${{ secrets.NVIDIA_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          enable-autofix: 'true'
+          test-command: '["python", "-m", "unittest", "discover", "-s", "tests", "-v"]'
