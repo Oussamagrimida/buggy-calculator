@@ -22,3 +22,4 @@ jobs:
           nvidia-api-key: ${{ secrets.NVIDIA_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           enable-autofix: 'true'
+          test-command: '["python", "-m", "unittest", "discover", "-s", "tests", "-v"]'
