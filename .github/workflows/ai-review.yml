@@ -15,6 +15,16 @@ jobs:
     steps:
       - name: Checkout test repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Verify PR checkout
+        run: |
+          echo "Event PR head: ${{ github.event.pull_request.head.sha }}"
+          echo "Actual checkout HEAD:"
+          git rev-parse HEAD
+          echo "Checked out branch:"
+          git branch --show-current
 
       - name: Run AI Code Reviewer
         uses: Oussamagrimida/AI-Code-reviewer-Github-Action@main
